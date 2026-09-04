@@ -10,7 +10,14 @@ export function ShootCard({ shoot, image }: { shoot: Shoot; image: Media | null 
         {image ? (
           <MediaImage
             media={image}
-            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+            // Intentionally ~2x the card's actual CSS width: `sizes` only
+            // tells next/image how wide the box is, not that object-cover
+            // has to blow a photo up further to fill this portrait (3:4)
+            // card's height too. Without the headroom, a wide/landscape
+            // source photo (e.g. cropped from the top with a low focal_y)
+            // gets fetched at a width-only resolution, then stretched
+            // vertically by the browser to cover the box — visibly blurry.
+            sizes="(min-width: 1024px) 60vw, (min-width: 640px) 90vw, 180vw"
             className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-105"
           />
         ) : (
