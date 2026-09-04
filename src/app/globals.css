@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm, muted editorial palette — cream, soft brown, blush. No pure black
+     or saturated colors, per the brand direction. Declared directly in
+     @theme (not :root + a re-mapped @theme inline) so there's a single
+     source of truth per token instead of two custom properties of the same
+     name relying on cascade order to resolve correctly. */
+  --color-cream: #faf5ee;
+  --color-cream-dark: #f2ead0;
+  --color-paper: #fffdfa;
+  --color-ink: #33291f;
+  --color-ink-soft: #5c4f42;
+  /* Darkened from the original #a9805f: that shade only reached ~3.3:1
+     against --color-cream, below the 4.5:1 WCAG AA minimum for text — and
+     `brown` is used throughout as the accent color for eyebrow labels and
+     links, not just borders/icons. This tone holds ~5.6:1. */
+  --color-brown: #7d5a3d;
+  --color-brown-dark: #5f4429;
+  --color-blush: #e9d2c9;
+  --color-blush-soft: #f2e3dc;
+  --color-line: #e6dccf;
+}
+
+@theme inline {
+  /* `inline` here because these reference next/font's CSS variables, which
+     only exist on the <body> className at runtime — not values @theme can
+     resolve at build time. */
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-work-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-blush);
+  color: var(--color-ink);
+}
+
+/* Reveal-on-scroll utility, progressively enhanced via IntersectionObserver
+   in components/ui/Reveal.tsx. Falls back to fully visible with no JS. */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* FAQ accordion panel: animates height via grid-template-rows so it works
+   for arbitrary/dynamic content without measuring the DOM. The global
+   prefers-reduced-motion rule above already forces all transition durations
+   to 0.01ms, so reduced motion is covered automatically. */
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms ease;
+}
+
+.faq-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel > div {
+  overflow: hidden;
+}
