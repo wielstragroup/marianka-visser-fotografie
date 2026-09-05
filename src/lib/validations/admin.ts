@@ -115,9 +115,15 @@ export const overMijPageSchema = z.object({
     .string()
     .trim()
     .transform((v) =>
+      // Browsers normalize a <textarea>'s .value to \n internally, but
+      // submitted form data uses \r\n line endings — without this
+      // normalization, a blank line between paragraphs (\r\n\r\n) never
+      // matches a plain \n{2,} split and the whole text collapses into one
+      // paragraph.
       v
+        .replace(/\r\n/g, "\n")
         .split(/\n{2,}/)
-        .map((p) => p.trim())
+        .map((p) => p.replace(/\s*\n\s*/g, " ").trim())
         .filter(Boolean)
     ),
   seo_title: optionalText,
