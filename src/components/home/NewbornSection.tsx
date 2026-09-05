@@ -6,9 +6,8 @@ import type { Media, Shoot } from "@/lib/types/database.types";
 
 export function NewbornSection({ shoot, image }: { shoot: Shoot | null; image: Media | null }) {
   const title = shoot?.name ?? "Newbornfotografie";
-  // Deliberately not shoot.short_description — that field now doubles as a
-  // short tagline on the shoot card/detail page ("Puur & liefdevol"), which
-  // would shrink this dedicated specialty blurb instead of strengthening it.
+  // Deliberately not shoot.short_description — that field is no longer shown
+  // publicly, and this dedicated specialty blurb deserves its own copy.
   const description =
     "Newbornfotografie is mijn specialiteit. Ik neem alle tijd om jouw kleintje op zijn gemak te stellen, zodat de puurste momenten vanzelf ontstaan.";
 

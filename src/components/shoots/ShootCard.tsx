@@ -34,9 +34,6 @@ export function ShootCard({ shoot, image }: { shoot: Shoot; image: Media | null 
           className="text-ink-soft transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-brown"
         />
       </div>
-      {shoot.short_description && (
-        <p className="mt-1 text-sm text-ink-soft">{shoot.short_description}</p>
-      )}
     </Link>
   );
 }

@@ -32,7 +32,7 @@ export function ShootsSection({
         <SectionHeading
           eyebrow="Fotoshoots"
           title="Voor elk bijzonder moment"
-          description="Van een teder liefdesverhaal tot de eerste dagen van een nieuw leven — elke shoot is op maat."
+          description="Van een liefdesverhaal tot de eerste dagen van een nieuw leven, van elke shoot maak ik een feestje!"
         />
 
         <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">

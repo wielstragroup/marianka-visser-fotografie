@@ -31,16 +31,16 @@ export function ShootForm({
         </FormField>
       </div>
 
-      <FormField label="Korte omschrijving / subtitel" htmlFor="short_description" optional>
+      <FormField label="Korte omschrijving" htmlFor="short_description" optional>
         <input
           id="short_description"
           name="short_description"
-          placeholder="Bijv. 'Puur & liefdevol'"
           defaultValue={shoot?.short_description ?? ""}
           className={inputClasses()}
         />
         <p className="mt-1 text-xs text-ink-soft">
-          Verschijnt onder de titel op de shootpagina en als korte tekst bij de kaart.
+          Wordt niet meer als subtitel getoond op de website. Alleen nog gebruikt als reserve-omschrijving
+          voor zoekmachines wanneer er geen SEO-omschrijving is ingevuld.
         </p>
       </FormField>
 

@@ -22,7 +22,7 @@ export function AboutTeaser({ image, text }: { image: Media | null; text: string
           <Reveal delay={100}>
             <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brown uppercase">Wie is Marianka?</p>
             <h2 className="font-serif text-3xl font-medium leading-tight text-ink sm:text-4xl md:text-5xl">
-              Hi hi, ik ben Marianka
+              Hoi hoi, ik ben Marianka
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg">{text}</p>
             <div className="mt-8">

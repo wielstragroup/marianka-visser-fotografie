@@ -88,9 +88,6 @@ export default async function ShootDetailPage({ params }: { params: Promise<{ sl
               <p className="mb-3 text-xs font-medium tracking-[0.2em] text-cream/90 uppercase">Specialiteit</p>
             )}
             <h1 className="font-serif text-4xl font-medium text-cream sm:text-6xl">{shoot.name}</h1>
-            {shoot.short_description && (
-              <p className="mt-3 text-base font-medium text-cream/90 sm:text-lg">{shoot.short_description}</p>
-            )}
           </Container>
         </div>
       </section>
@@ -98,13 +95,11 @@ export default async function ShootDetailPage({ params }: { params: Promise<{ sl
       <section className="py-20 sm:py-28">
         <Container size="narrow">
           <Reveal>
-            {shoot.long_description ? (
+            {shoot.long_description && (
               <p className="whitespace-pre-line text-lg leading-relaxed text-ink-soft">
                 {shoot.long_description}
               </p>
-            ) : shoot.short_description ? (
-              <p className="text-lg leading-relaxed text-ink-soft">{shoot.short_description}</p>
-            ) : null}
+            )}
           </Reveal>
           {shoot.duration_label && (
             <p className="mt-6 flex items-center gap-2 text-sm text-ink-soft">

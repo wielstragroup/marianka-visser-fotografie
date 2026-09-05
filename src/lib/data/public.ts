@@ -33,7 +33,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       seo_description_default:
         "Fotograaf in Damwâld, actief in Friesland, Groningen, Drenthe en Overijssel.",
       og_image_media_id: null,
-      travel_cost_text: "Reiskosten: €0,25 per km.",
+      travel_cost_text: "Reiskosten: €0,25 per km vanaf Damwâld.",
       updated_at: new Date().toISOString(),
     }
   );

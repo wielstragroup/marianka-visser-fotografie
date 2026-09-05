@@ -99,7 +99,7 @@ export default async function AdminSettingsPage({
           <input
             id="travel_cost_text"
             name="travel_cost_text"
-            placeholder="Reiskosten: €0,25 per km."
+            placeholder="Reiskosten: €0,25 per km vanaf Damwâld."
             defaultValue={settings?.travel_cost_text ?? ""}
             className={inputClasses()}
           />

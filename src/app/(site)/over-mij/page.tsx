@@ -57,7 +57,7 @@ export default async function OverMijPage() {
             <div className="order-1 lg:order-2">
               <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brown uppercase">Over mij</p>
               <h1 className="font-serif text-4xl font-medium leading-tight text-ink sm:text-5xl md:text-6xl">
-                Hi hi, ik ben Marianka
+                Hoi hoi, ik ben Marianka
               </h1>
 
               <div className="mt-8 space-y-5">
@@ -70,8 +70,7 @@ export default async function OverMijPage() {
 
               <Reveal delay={paragraphs.length * 60} className="mt-10 rounded-sm border border-line bg-blush-soft/60 p-6">
                 <p className="text-sm leading-relaxed text-ink-soft">
-                  Ik werk vanuit {settings.location} en reis door {settings.service_area.join(", ")} om
-                  jouw shoot vast te leggen.
+                  Ik reis door {settings.service_area.join(", ")} om jouw shoot vast te leggen.
                 </p>
               </Reveal>
 

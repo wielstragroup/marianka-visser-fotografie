@@ -68,7 +68,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           <div>
             <p className="mb-4 text-xs font-medium tracking-[0.2em] text-brown uppercase">Werkgebied</p>
             <p className="text-sm leading-relaxed text-ink-soft">
-              {settings.location} &amp; {settings.service_area.join(", ")}
+              {settings.service_area.join(" · ")}
             </p>
           </div>
         </div>

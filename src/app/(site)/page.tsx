@@ -26,7 +26,7 @@ import type { Media } from "@/lib/types/database.types";
 const DEFAULT_INTRO_TEXT = "Ik leg de momenten vast die er écht toe doen.";
 
 const DEFAULT_ABOUT_TEASER_TEXT =
-  "Vanuit Damwâld fotografeer ik met veel plezier de momenten die je later opnieuw wilt beleven. Van een klein, nieuw gezinnetje tot een groot familiefeest: ik leg ze vast zoals ze echt zijn.";
+  "Met veel plezier fotografeer ik de momenten die je later opnieuw wilt beleven. Van een klein, nieuw gezinnetje tot een groot familiefeest: ik leg ze vast zoals ze echt zijn.";
 
 const DEFAULT_SHOOTS_QUOTE = "De mooiste foto's ontstaan op de momenten dat je gewoon jezelf bent.";
 

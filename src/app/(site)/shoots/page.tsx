@@ -26,7 +26,7 @@ export default async function ShootsPage() {
         <SectionHeading
           eyebrow="Fotoshoots"
           title="Voor elk bijzonder moment"
-          description="Van een teder liefdesverhaal tot de eerste dagen van een nieuw leven — elke shoot is op maat, met alle tijd en aandacht voor jullie verhaal."
+          description="Van een liefdesverhaal tot de eerste dagen van een nieuw leven, van elke shoot maak ik een feestje!"
         />
 
         {shoots.length === 0 ? (
