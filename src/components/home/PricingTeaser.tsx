@@ -23,7 +23,7 @@ export function PricingTeaser({
         />
 
         <div className="mt-14">
-          <PricingGrid packages={packages.slice(0, 3)} />
+          <PricingGrid packages={packages} />
         </div>
 
         <TravelCostNote text={travelCostText} />
