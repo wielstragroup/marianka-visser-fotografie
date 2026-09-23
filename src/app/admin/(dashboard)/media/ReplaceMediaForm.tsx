@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { ALLOWED_MEDIA_TYPES, MAX_FILE_SIZE, MEDIA_BUCKET, buildMediaStoragePath, readImageDimensions } from "@/lib/media";
+import { optimizeImageForUpload } from "@/lib/image-optimize";
 import { finalizeMediaReplace } from "./actions";
 
 export function ReplaceMediaForm({ mediaId }: { mediaId: string }) {
@@ -30,10 +31,18 @@ export function ReplaceMediaForm({ mediaId }: { mediaId: string }) {
 
     setIsSubmitting(true);
     const supabase = createClient();
-    const path = buildMediaStoragePath(file.name);
 
-    const { error: uploadError } = await supabase.storage.from(MEDIA_BUCKET).upload(path, file, {
-      contentType: file.type,
+    // Same browser-side optimization as new uploads (see UploadForm.tsx) —
+    // this also doubles as the migration path for old, oversized originals:
+    // replacing a photo here re-uploads it through the optimizer.
+    const optimized = await optimizeImageForUpload(file);
+    const uploadBlob: Blob = optimized?.blob ?? file;
+    const uploadFilename = optimized?.filename ?? file.name;
+    const uploadContentType = optimized?.contentType ?? file.type;
+
+    const path = buildMediaStoragePath(uploadFilename);
+    const { error: uploadError } = await supabase.storage.from(MEDIA_BUCKET).upload(path, uploadBlob, {
+      contentType: uploadContentType,
     });
 
     if (uploadError) {
@@ -43,13 +52,15 @@ export function ReplaceMediaForm({ mediaId }: { mediaId: string }) {
     }
 
     const { data: publicUrlData } = supabase.storage.from(MEDIA_BUCKET).getPublicUrl(path);
-    const dimensions = await readImageDimensions(file);
+    const dimensions = optimized
+      ? { width: optimized.width, height: optimized.height }
+      : await readImageDimensions(file);
 
     const result = await finalizeMediaReplace(mediaId, {
       storage_path: path,
       url: publicUrlData.publicUrl,
-      mime_type: file.type,
-      file_size: file.size,
+      mime_type: uploadContentType,
+      file_size: uploadBlob.size,
       width: dimensions?.width,
       height: dimensions?.height,
     });
