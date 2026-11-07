@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { REVIEW_MAX_LENGTH } from "@/lib/validations/testimonial";
 
 const optionalText = z.string().trim().optional().or(z.literal("")).transform((v) => (v ? v : null));
 const optionalUuid = z
@@ -56,12 +57,26 @@ export const faqSchema = z.object({
 });
 
 export const testimonialSchema = z.object({
-  name: z.string().trim().min(1, "Vul een naam in."),
-  quote: z.string().trim().min(1, "Vul een tekst in."),
-  rating: optionalNumberField,
+  name: z.string().trim().min(1, "Vul een naam in.").max(120, "De naam is te lang."),
+  quote: z
+    .string()
+    .trim()
+    .min(1, "Vul een tekst in.")
+    .max(REVIEW_MAX_LENGTH, `De tekst mag maximaal ${REVIEW_MAX_LENGTH} tekens zijn.`),
+  shoot_type: z
+    .string()
+    .trim()
+    .max(120, "Het type fotoshoot is te lang.")
+    .optional()
+    .or(z.literal(""))
+    .transform((v) => (v ? v : null)),
+  rating: optionalNumberField.refine(
+    (v) => v === null || (Number.isInteger(v) && v >= 1 && v <= 5),
+    "Vul 1 tot en met 5 sterren in."
+  ),
   avatar_media_id: optionalUuid,
   sort_order: numberField,
-  is_visible: checkbox,
+  publication_consent: checkbox,
 });
 
 export const availabilitySchema = z.object({
@@ -101,7 +116,6 @@ export const siteSettingsSchema = z.object({
     .trim()
     .transform((v) => v.split(",").map((s) => s.trim()).filter(Boolean)),
   footer_text: optionalText,
-  testimonials_enabled: checkbox,
   logo_media_id: optionalUuid,
   favicon_media_id: optionalUuid,
   og_image_media_id: optionalUuid,

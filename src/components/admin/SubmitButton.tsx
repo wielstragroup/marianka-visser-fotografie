@@ -12,7 +12,7 @@ export function SubmitButton({
 }: {
   children?: React.ReactNode;
   pendingLabel?: string;
-  variant?: "primary" | "danger";
+  variant?: "primary" | "secondary" | "danger";
   className?: string;
 }) {
   const { pending } = useFormStatus();
@@ -24,6 +24,7 @@ export function SubmitButton({
       className={cn(
         "inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium transition-colors disabled:opacity-60",
         variant === "primary" && "bg-ink text-cream hover:bg-brown-dark",
+        variant === "secondary" && "border border-line bg-paper text-ink hover:border-brown",
         variant === "danger" && "bg-red-700 text-white hover:bg-red-800",
         className
       )}

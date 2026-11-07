@@ -18,7 +18,7 @@ import {
   getFeaturedMedia,
   getVisiblePricingPackages,
   getVisibleFaqs,
-  getVisibleTestimonials,
+  getPublishedTestimonials,
   getPage,
 } from "@/lib/data/public";
 import type { Media } from "@/lib/types/database.types";
@@ -52,7 +52,7 @@ export default async function HomePage() {
       getFeaturedMedia(10),
       getVisiblePricingPackages(),
       getVisibleFaqs(),
-      getVisibleTestimonials(),
+      getPublishedTestimonials(6),
       getPage("home"),
     ]);
 

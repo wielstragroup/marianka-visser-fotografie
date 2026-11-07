@@ -2,6 +2,9 @@
 // needs to derive the same storage path shape. No server-only APIs here.
 
 export const MEDIA_BUCKET = "media";
+// Published customer photos. They share the media bucket and table so the site
+// can show them like any other image, but belong to a review, not the library.
+export const TESTIMONIAL_MEDIA_PREFIX = "testimonials/";
 export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB — generous for high-res source photography
 export const ALLOWED_MEDIA_TYPES = [
   "image/jpeg",

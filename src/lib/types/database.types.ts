@@ -116,12 +116,21 @@ type FaqRow = {
   updated_at: string;
 };
 
+export type TestimonialStatus = "pending" | "approved" | "rejected";
+
 type TestimonialRow = {
   id: string;
   name: string;
   quote: string;
   rating: number | null;
   avatar_media_id: string | null;
+  shoot_type: string | null;
+  status: TestimonialStatus;
+  publication_consent: boolean;
+  // Original customer photo in the private bucket. See lib/testimonial-photos.ts.
+  photo_path: string | null;
+  photo_consent: boolean;
+  approved_at: string | null;
   sort_order: number;
   is_visible: boolean;
   created_at: string;

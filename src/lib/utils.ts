@@ -28,6 +28,17 @@ export function formatDate(date: string) {
   }).format(new Date(`${date}T00:00:00Z`));
 }
 
+// For a timestamp shown as a calendar day. Pinned to Dutch time so a review
+// approved late in the evening doesn't show the next day on a UTC server.
+export function formatDayMonthYear(date: string) {
+  return new Intl.DateTimeFormat("nl-NL", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Europe/Amsterdam",
+  }).format(new Date(date));
+}
+
 export function formatDateTime(date: string) {
   return new Intl.DateTimeFormat("nl-NL", {
     day: "numeric",

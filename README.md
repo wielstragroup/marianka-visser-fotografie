@@ -42,6 +42,7 @@ supabase/
    - `supabase/migrations/0001_init.sql` — tabellen, RLS-policies
    - `supabase/migrations/0002_storage.sql` — storage-bucket `media` + policies
    - `supabase/migrations/0003_seed.sql` — bevestigde startcontent (shoots, FAQ, beschikbaarheid, tarieven)
+   - de overige bestanden in `supabase/migrations/`, op nummer
 3. **Env-variabelen instellen**: kopieer `.env.example` naar `.env.local` en vul in:
    - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Project Settings → API
    - `SUPABASE_SERVICE_ROLE_KEY` — alleen server-side gebruikt, nooit naar de client sturen
@@ -74,4 +75,5 @@ Het project is Vercel-ready. Zet dezelfde env-variabelen als in `.env.example` i
 ## Bekende aandachtspunten
 
 - De koppeling tussen tarieven en specifieke shoots is bij oplevering nog niet vastgesteld door de klant; de drie bekende bedragen (€150/10 foto's, €350/30 foto's, €600/alle foto's) staan als algemene pakketten in de tarievenbeheer en kunnen daar alsnog aan een shoot gekoppeld worden.
-- Recensies staan standaard uitgeschakeld totdat de klant besluit ze te gebruiken (schakelbaar in `/admin/testimonials`).
+- Klanten sturen recensies in via `/recensies` of de directe link `/recensie-schrijven`. Een recensie komt pas online na goedkeuring in `/admin/testimonials`. Met de schakelaar op die pagina bepaal je alleen of recensies op de homepage staan; `/recensies` blijft altijd bereikbaar.
+- Klanten kunnen een foto meesturen. Die staat in de privé-bucket `testimonial-photos` en wordt pas bij goedkeuring naar de openbare bucket `media` gekopieerd. Hiervoor moet `SUPABASE_SERVICE_ROLE_KEY` ook op Vercel staan.

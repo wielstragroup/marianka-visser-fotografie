@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: "/over-mij", label: "Over mij" },
   { href: "/shoots", label: "Shoots" },
   { href: "/tarieven", label: "Tarieven" },
+  { href: "/recensies", label: "Recensies" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];

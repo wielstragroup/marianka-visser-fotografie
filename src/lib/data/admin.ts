@@ -1,5 +1,6 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
+import { TESTIMONIAL_MEDIA_PREFIX } from "@/lib/media";
 import type { SubmissionStatus } from "@/lib/types/database.types";
 
 // Admin data access. Unlike lib/data/public.ts these deliberately do NOT
@@ -13,7 +14,10 @@ export async function getDashboardStats() {
 
   const [shoots, media, faqs, submissions, newSubmissions] = await Promise.all([
     supabase.from("shoots").select("id", { count: "exact", head: true }),
-    supabase.from("media").select("id", { count: "exact", head: true }),
+    supabase
+      .from("media")
+      .select("id", { count: "exact", head: true })
+      .not("storage_path", "like", `${TESTIMONIAL_MEDIA_PREFIX}%`),
     supabase.from("faqs").select("id", { count: "exact", head: true }),
     supabase.from("contact_submissions").select("id", { count: "exact", head: true }),
     supabase.from("contact_submissions").select("id", { count: "exact", head: true }).eq("status", "nieuw"),
@@ -50,9 +54,15 @@ export async function getShootById(id: string) {
   return data ?? null;
 }
 
+// Published customer photos are left out on purpose: they only have consent for
+// their own review, so they must not be selectable for the portfolio or a shoot.
 export async function getAllMedia(filters?: { category?: string; shootId?: string }) {
   const supabase = await createClient();
-  let query = supabase.from("media").select("*").order("sort_order", { ascending: true });
+  let query = supabase
+    .from("media")
+    .select("*")
+    .not("storage_path", "like", `${TESTIMONIAL_MEDIA_PREFIX}%`)
+    .order("sort_order", { ascending: true });
   if (filters?.category) query = query.eq("category", filters.category);
   if (filters?.shootId) query = query.eq("shoot_id", filters.shootId);
   const { data } = await query;
@@ -91,7 +101,7 @@ export async function getFaqById(id: string) {
 
 export async function getAllTestimonials() {
   const supabase = await createClient();
-  const { data } = await supabase.from("testimonials").select("*").order("sort_order", { ascending: true });
+  const { data } = await supabase.from("testimonials").select("*").order("created_at", { ascending: false });
   return data ?? [];
 }
 
@@ -99,6 +109,13 @@ export async function getTestimonialById(id: string) {
   const supabase = await createClient();
   const { data } = await supabase.from("testimonials").select("*").eq("id", id).single();
   return data ?? null;
+}
+
+export async function getMediaByIds(ids: string[]) {
+  if (ids.length === 0) return [];
+  const supabase = await createClient();
+  const { data } = await supabase.from("media").select("*").in("id", ids);
+  return data ?? [];
 }
 
 export async function getAllAvailability() {

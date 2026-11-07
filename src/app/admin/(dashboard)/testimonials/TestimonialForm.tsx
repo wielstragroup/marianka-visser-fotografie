@@ -1,6 +1,7 @@
 import { FormField, inputClasses } from "@/components/ui/FormField";
 import { SubmitButton } from "@/components/admin/SubmitButton";
 import type { Media, Testimonial } from "@/lib/types/database.types";
+import { REVIEW_MAX_LENGTH } from "@/lib/validations/testimonial";
 
 export function TestimonialForm({
   testimonial,
@@ -14,16 +15,34 @@ export function TestimonialForm({
   return (
     <form action={action} className="max-w-xl space-y-6">
       <FormField label="Naam" htmlFor="name">
-        <input id="name" name="name" defaultValue={testimonial?.name} required className={inputClasses()} />
+        <input
+          id="name"
+          name="name"
+          defaultValue={testimonial?.name}
+          required
+          maxLength={120}
+          className={inputClasses()}
+        />
+      </FormField>
+
+      <FormField label="Type fotoshoot" htmlFor="shoot_type" optional>
+        <input
+          id="shoot_type"
+          name="shoot_type"
+          defaultValue={testimonial?.shoot_type ?? ""}
+          maxLength={120}
+          className={inputClasses()}
+        />
       </FormField>
 
       <FormField label="Tekst" htmlFor="quote">
         <textarea
           id="quote"
           name="quote"
-          rows={4}
+          rows={6}
           defaultValue={testimonial?.quote}
           required
+          maxLength={REVIEW_MAX_LENGTH}
           className={inputClasses()}
         />
       </FormField>
@@ -52,30 +71,32 @@ export function TestimonialForm({
         </FormField>
       </div>
 
-      <FormField label="Foto/avatar" htmlFor="avatar_media_id" optional>
-        <select
-          id="avatar_media_id"
-          name="avatar_media_id"
-          defaultValue={testimonial?.avatar_media_id ?? ""}
-          className={inputClasses()}
-        >
-          <option value="">Geen</option>
-          {media.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.title || item.alt_text || item.storage_path}
-            </option>
-          ))}
-        </select>
-      </FormField>
+      {!testimonial?.photo_path && (
+        <FormField label="Foto/avatar" htmlFor="avatar_media_id" optional>
+          <select
+            id="avatar_media_id"
+            name="avatar_media_id"
+            defaultValue={testimonial?.avatar_media_id ?? ""}
+            className={inputClasses()}
+          >
+            <option value="">Geen</option>
+            {media.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.title || item.alt_text || item.storage_path}
+              </option>
+            ))}
+          </select>
+        </FormField>
+      )}
 
-      <label className="flex items-center gap-2 text-sm text-ink">
+      <label className="flex items-start gap-2 text-sm text-ink">
         <input
           type="checkbox"
-          name="is_visible"
-          defaultChecked={testimonial?.is_visible ?? true}
-          className="h-4 w-4 accent-brown"
+          name="publication_consent"
+          defaultChecked={testimonial?.publication_consent ?? false}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-brown"
         />
-        Zichtbaar op de website
+        De klant heeft toestemming gegeven om naam en recensie te publiceren
       </label>
 
       <SubmitButton />

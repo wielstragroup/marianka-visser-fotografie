@@ -3,7 +3,7 @@ import { createPublicClient } from "@/lib/supabase/public";
 import type { Faq, Media, Page, PricingPackage, Shoot, SiteSettings, Testimonial, Availability } from "@/lib/types/database.types";
 
 // Read-only data access for the public site. Every query here relies on RLS
-// (is_visible = true) already scoping the rows — these functions never
+// (is_visible = true, or status = 'approved' for testimonials) already scoping the rows — these functions never
 // bypass that, so a page simply rendering this data can't leak draft
 // content.
 
@@ -143,13 +143,16 @@ export async function getVisibleFaqs(): Promise<Faq[]> {
   return data ?? [];
 }
 
-export async function getVisibleTestimonials(): Promise<Testimonial[]> {
+export async function getPublishedTestimonials(limit?: number): Promise<Testimonial[]> {
   const supabase = createPublicClient();
-  const { data } = await supabase
+  let query = supabase
     .from("testimonials")
     .select("*")
-    .eq("is_visible", true)
-    .order("sort_order", { ascending: true });
+    .eq("status", "approved")
+    .order("sort_order", { ascending: true })
+    .order("approved_at", { ascending: false });
+  if (limit) query = query.limit(limit);
+  const { data } = await query;
   return data ?? [];
 }
 

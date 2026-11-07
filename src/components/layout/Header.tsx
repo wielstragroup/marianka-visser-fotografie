@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { href: "/over-mij", label: "Over mij" },
   { href: "/shoots", label: "Shoots" },
   { href: "/tarieven", label: "Tarieven" },
+  { href: "/recensies", label: "Recensies" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
@@ -79,13 +80,13 @@ export function Header({ businessName, logo }: { businessName: string; logo: Med
           )}
         </Link>
 
-        <nav className="hidden items-center gap-9 md:flex">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-9">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "text-sm font-medium tracking-wide transition-colors",
+                "text-sm font-medium tracking-wide whitespace-nowrap transition-colors",
                 transparent ? "text-cream/90 hover:text-cream" : "text-ink-soft hover:text-ink",
                 pathname === link.href && (transparent ? "text-cream" : "text-ink")
               )}
@@ -95,7 +96,7 @@ export function Header({ businessName, logo }: { businessName: string; logo: Med
           ))}
         </nav>
 
-        <div className="hidden shrink-0 md:block">
+        <div className="hidden shrink-0 lg:block">
           <Button
             href="/contact"
             variant={transparent ? "secondary" : "primary"}
@@ -111,7 +112,7 @@ export function Header({ businessName, logo }: { businessName: string; logo: Med
           aria-expanded={isOpen}
           onClick={() => setIsOpen((v) => !v)}
           className={cn(
-            "-mr-2 flex h-10 w-10 shrink-0 items-center justify-center md:hidden",
+            "-mr-2 flex h-10 w-10 shrink-0 items-center justify-center lg:hidden",
             transparent ? "text-cream" : "text-ink"
           )}
         >
@@ -120,7 +121,7 @@ export function Header({ businessName, logo }: { businessName: string; logo: Med
       </div>
 
       {isOpen && (
-        <nav className="border-t border-line bg-cream px-6 py-6 md:hidden">
+        <nav className="border-t border-line bg-cream px-6 py-6 lg:hidden">
           <ul className="flex flex-col gap-5">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
